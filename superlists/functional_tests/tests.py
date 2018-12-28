@@ -21,7 +21,7 @@ class NewVisitorTest(LiveServerTestCase):
 				table=self.browser.find_element_by_id('id_list_table')
 				rows=table.find_elements_by_tag_name('tr')
 				self.assertIn(row_text,[row.text for row in rows])
-				return 
+				return
 			except (AssertionError, WebDriverException) as e:
 				if time.time() - start_time > MAX_WAIT:
 					raise e
@@ -63,12 +63,7 @@ class NewVisitorTest(LiveServerTestCase):
 		#time.sleep(1)
 
 
-	
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Buy peacock feathers' for row in rows)
-		)
+
 		
 		# The page updates again, and now shows both items on her list
 		self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
