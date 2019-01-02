@@ -1,4 +1,5 @@
-from django.test import LiveServerTestCase
+#from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 #import unittest
@@ -9,13 +10,13 @@ from lists.models import Item, List
 from selenium.common.exceptions import WebDriverException
 MAX_WAIT = 10	
 
-class NewVisitorTest(LiveServerTestCase): 
+class NewVisitorTest(StaticLiveServerTestCase): 
 	def setUp(self): 
 		self.browser = webdriver.Firefox() 
 		self.browser.implicitly_wait(30)
 	def tearDown(self): 
 	    self.browser.quit()
-	
+	'''
 	def wait_for_row_in_list_table(self,row_text):
 		start_time=time.time()
 		while True:
@@ -116,11 +117,12 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertNotIn('Buy peacock feathers', page_text)
 		self.assertIn('Buy milk', page_text)
 		# Satisfied, they both go back to sleep
-	
+	'''
 	def test_layout_and_styling(self):
 		# Edith goes to the home page 
 		self.browser.get(self.live_server_url)
 		self.browser.set_window_size(1024, 768)
+		
 		# She notices the input box is nicely centered
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
@@ -128,6 +130,7 @@ class NewVisitorTest(LiveServerTestCase):
 			512,
 			delta=10
 		)
+		
 		# She starts a new list and sees the input is nicely
 		# centered there too
 		inputbox.send_keys('testing')

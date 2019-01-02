@@ -1,7 +1,6 @@
 from django.db import models
 # Create your models here.
 class List(models.Model):
-	#text = models.TextField(default='This is a list')
 	pass
 
 class Item(models.Model):
