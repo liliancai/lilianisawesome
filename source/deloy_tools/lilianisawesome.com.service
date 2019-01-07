@@ -1,9 +1,0 @@
-[Unit]
-Description=Gunicorn server for lilianisawesome.com
-[Service]
-Restart=on-failure
-User=lilian
-WorkingDirectory=/home/sites/lilianisawesome/source
-ExecStart=/home/sites/lilianisawesome/virtualenv/bin/gunicorn --bind unix:/tmp/lilianisawesome.com.socket superlists.wsgi:application
-[Install]
-WantedBy=multi-user.target
