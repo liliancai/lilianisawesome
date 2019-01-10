@@ -12,7 +12,7 @@ class ItemValidationTest(FunctionalTest):
 		
 		self.wait_for(lambda:self.assertEqual(
 			self.browser.find_element_by_css_selector('.has-error').text,
-			"You can't enter an empty list item"
+			"You can't have an empty list item"
 		))
 
 		#try end a empty item at a exsited list
