@@ -25,7 +25,11 @@ SECRET_KEY = 'i_g5^0bwv(7!tjr7%w_ntp6e=w*+-_h$!jibg5c8y2@7jfl-tx'
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG =True 
 DEBUG=False
-ALLOWED_HOSTS = ['lilianisawesome.com']
+ALLOWED_HOSTS = [
+    'www.lilianisawesome.com',
+    'localhost',
+    '127.0.0.1',
+    ]
 
 
 # Application definition
@@ -38,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
+    'accounts',
 ]
+
+AUTH_USER_MODEL='accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
