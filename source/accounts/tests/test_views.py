@@ -45,3 +45,17 @@ class SendLoginEmailViewTest(TestCase):
 		self.assertEqual(subject,'Your log in link from todolist')
 		self.assertEqual(from_email,'test@mockfrom.com')
 		self.assertEqual(to_email,['test@mockto.com'])
+
+
+	def test_adds_success_message(self):
+		
+		response=self.client.post('/accounts/send_login_email',data={
+			'email':'test@mockto.com'
+		},follow=True)
+
+		message=list(response.context['messages'])[0]
+		self.assertEqual(
+			message.message,
+			"Check your email, we've sent you a link you can use to log in."
+		)
+		self.assertEqual(message.tags,"success")
