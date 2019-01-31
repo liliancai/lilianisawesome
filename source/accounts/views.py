@@ -9,7 +9,7 @@ def send_login_email(request):
 	email = request.POST['email']
 	send_mail(
 		'Your log in link from todolist',
-		'body text tbc',
+		'Use this link to log in',
 		'test@mockfrom.com',
 		[email],
 	)
@@ -19,3 +19,5 @@ def send_login_email(request):
 	)
 	return redirect('/')
 
+def login(self):
+	return redirect('/')		

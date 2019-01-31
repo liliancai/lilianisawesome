@@ -1,17 +1,18 @@
 from django.core import mail
 from selenium.webdriver.common.keys import Keys 
 import re
-
 from .base import FunctionalTest
+import time
 
 TEST_EMAIL = 'liliancai@404@gmail.com'
-SUBJECT="Your login link for todolist"
+SUBJECT="Your log in link from todolist"
 
 class LoginTest(FunctionalTest):
 
 	def test_can_get_email_link_to_log_in(self):
 		#send email
 		self.browser.get(self.live_server_url)
+		time.sleep(30)
 		self.browser.find_element_by_name('email').send_keys(TEST_EMAIL)
 		self.browser.find_element_by_name('email').send_keys(Keys.ENTER)
 

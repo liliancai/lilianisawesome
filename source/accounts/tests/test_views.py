@@ -5,11 +5,9 @@ from unittest import skip
 import accounts.views
 
 class SendLoginEmailViewTest(TestCase):
-
+	#@skip
 	def test_redirects_to_home_page(self):
-		response=self.client.post('/accounts/send_login_email',data={
-			'email':'test@test.com'
-			})
+		response=self.client.post('/accounts/login?token=abcd123')
 		self.assertRedirects(response, '/')
 
 
