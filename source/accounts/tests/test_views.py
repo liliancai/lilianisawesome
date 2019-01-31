@@ -3,6 +3,8 @@ from unittest.mock import patch
 from django.test import TestCase
 from unittest import skip
 import accounts.views
+from accounts.models import Token
+Testemail="liliancai404@gmail.com"
 
 class SendLoginEmailViewTest(TestCase):
 	#@skip
@@ -11,28 +13,25 @@ class SendLoginEmailViewTest(TestCase):
 		self.assertRedirects(response, '/')
 
 
-	@patch('accounts.views.send_mail')	
-	def test_sends_mail_address_from_post(self,mock_send_mail):
-
-		'''
-		def fake_send_mail(subject,body,from_email,to_list):
-			self.send_mail_called=True
-			self.subject=subject
-			self.body=body
-			self.from_email=from_email
-			#I wanna chang this to_list to to_email!
-			self.to_list=to_list
-		'''
-
+	def test_creates_token_associated_with_email(self):
 		self.client.post('/accounts/send_login_email',data={
-			'email':'test@mockto.com'
+			'email':Testemail
 		})
-		#then check the email content is what supposed to or not
-		self.assertTrue(mock_send_mail.send_mail_called)
+		token=Token.objects.first()
+
+		self.assertEqual(token.email,Testemail)
+
+	
+	@patch('accounts.views.send_mail')
+	def test_sends_link_to_login_using_token_uid(self,mock_send_mail):
+		self.client.post('/accounts/send_login_email',data={
+			'email':Testemail
+		})
+		token=Token.objects.first()
+		expected_url=f'http://testserver/accounts/login?token={token.uid}'
 		(subject,body,from_email,to_email),kwargs=mock_send_mail.call_args
-		self.assertEqual(subject,'Your log in link from todolist')
-		self.assertEqual(from_email,'test@mockfrom.com')
-		self.assertEqual(to_email,['test@mockto.com'])
+		self.assertIn(expected_url,body)
+
 
 
 	def test_adds_success_message(self):
