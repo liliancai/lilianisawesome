@@ -36,5 +36,5 @@ def login(request):
 	uid=request.GET.get('token')
 	user=auth.authenticate(uid=uid)
 	if user is not None:
-			auth.login(request.user)
+			auth.login(request,user)
 	return redirect('/')		
