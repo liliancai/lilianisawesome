@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -13,11 +14,20 @@
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="/">Todolist</a>
-					<form class="navbar-form navbar-right" method="POST" action="{% url 'send_login_email' %}">
-						<span>Enter email to log in:</span>
-						<input class="form-control" name="email" type="text"/>
-						{% csrf_token %}
-					</form>
+					{% if user.email %}
+						<ul class="nav navbar-brand navbar-right">
+							<li class="navbar-text">Logged in as {{ user.email }}</li>
+							<li><a href="#">Log out</a></li>
+						</ul>
+					{% else %}
+						<form 	class="navbar-form navbar-right" 
+								method="POST" 
+								action="{% url 'send_login_email' %}">
+							<span>Enter email to log in:</span>
+							<input class="form-control" name="email" type="text"/>
+							{% csrf_token %}
+						</form>
+					{% endif %}
 				</div>
 			</nav>
 			{% if messages %}
@@ -57,7 +67,7 @@
 			</div>
 		</div>
 		<script src="/static/jquery-3.1.1.min.js"></script> 
-		<script src="/static/list.js"></script>
+		<script src="/lists/static/list.js"></script>
 		<script>
 			$(document).ready(function () { 
 				window.Superlists.initialize();

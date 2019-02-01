@@ -19,7 +19,7 @@ def send_login_email(request):
 	send_mail(
 		'Your log in link from todolist',
 		message_body,
-		'test@mockfrom.com',
+		'liliancai404@gmail.com',
 		[email],
 	)
 	messages.success(
