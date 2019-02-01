@@ -20,7 +20,6 @@ class SendLoginEmailViewTest(TestCase):
 		token=Token.objects.first()
 
 		self.assertEqual(token.email,Testemail)
-
 	
 	@patch('accounts.views.send_mail')
 	def test_sends_link_to_login_using_token_uid(self,mock_send_mail):
@@ -31,6 +30,7 @@ class SendLoginEmailViewTest(TestCase):
 		expected_url=f'http://testserver/accounts/login?token={token.uid}'
 		(subject,body,from_email,to_email),kwargs=mock_send_mail.call_args
 		self.assertIn(expected_url,body)
+
 
 
 
@@ -46,3 +46,15 @@ class SendLoginEmailViewTest(TestCase):
 			"Check your email, we've sent you a link you can use to log in."
 		)
 		self.assertEqual(message.tags,"success")
+
+	@patch('accounts.views.auth')
+	def test_calls_authenticate_with_uid_from_get_request(self,mock_view_auth):
+	#mock authenticate() cus login used  auth.authenticate()
+	#better don't over test authenticate to much
+	#so mock views.au here,just check if the call_args equal to call(uid)
+	#see if the token=abc123 in url arrive authenticate() or not
+	#just test the api here and leave the detail in authenticate's own ut
+		self.client.get('/accounts/login?token=abc123')
+		self.assertEqual(mock_view_auth.authenticate.call_args,call(uid='abc123'))'
+
+		
