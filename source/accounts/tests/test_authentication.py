@@ -30,3 +30,23 @@ class AuthenticateTest(TestCase):
 		token=Token.objects.create(email=email)
 		user=PasswordlessAuthenticationBackend().authenticate(token.uid)
 		self.assertEqual(user,existing_user)
+
+
+class GetUserTest(TestCase):
+	#but why a new get_user function, better explicit than implicit???
+	
+	def test_gets_user_by_email(self):
+	#create a user named desired_user, and call get_user to get a found_user
+	#desired_user is supposed to equal to found_user
+
+			email='testgetuserbyemail@accounts.ut'
+			desired_user=User.objects.create(email=email)
+			found_user=PasswordlessAuthenticationBackend().get_user(email)
+			self.assertEqual(desired_user,found_user)
+
+	def test_returns_None_if_no_user_with_that_email(self):
+	#get_user without create one before, assertEqual()
+			email='doesnotexist@accounts.ut'
+			self.assertIsNone(PasswordlessAuthenticationBackend().get_user(email=email))
+			
+
