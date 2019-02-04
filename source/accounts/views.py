@@ -38,3 +38,9 @@ def login(request):
 	if user is not None:
 			auth.login(request,user)
 	return redirect('/')		
+
+#call auth.logout
+'''
+def logout(requset):
+	pass
+'''

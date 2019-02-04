@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i_g5^0bwv(7!tjr7%w_ntp6e=w*+-_h$!jibg5c8y2@7jfl-tx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG =True 
-DEBUG=False
+DEBUG=True 
+#DEBUG=False
 ALLOWED_HOSTS = [
     'www.lilianisawesome.com',
     'localhost',
@@ -164,6 +164,7 @@ LOGGING = {
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'liliancai404@gmail.com'
-EMAIL_HOST_PASSWORD = 'ROOTlilianisawesome'
+#EMAIL_HOST_PASSWORD = 'ROOTlilianisawesome'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

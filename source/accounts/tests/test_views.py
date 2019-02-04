@@ -71,5 +71,3 @@ class LoginViewTest(TestCase):
 		self.client.get('/accounts/login?token=abc123')
 		self.assertFalse(mock_auth.login.called)
 
-
-
