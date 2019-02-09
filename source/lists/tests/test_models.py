@@ -1,36 +1,10 @@
 from django.test import TestCase
 from lists.models import Item, List
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+User=get_user_model()
 
 class ListModelTest(TestCase):
-	'''
-	def test_saving_and_retrieving_items(self): 
-		list_=List()
-		list_.save()
-
-		first_item = Item()
-		first_item.text = 'The first (ever) list item' 
-		first_item.list=list_
-		first_item.save()
-
-		second_item = Item()
-		second_item.text = 'Item the second'
-		second_item.list=list_
-		second_item.save()
-
-		saved_lists=List.objects.first()
-		self.assertEqual(saved_lists,list_)
-
-		saved_items = Item.objects.all()
-		self.assertEqual(saved_items.count(), 2)
-
-		first_saved_item = saved_items[0]
-		second_saved_item = saved_items[1]
-		self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-		self.assertEqual(first_saved_item.list,list_)
-		self.assertEqual(second_saved_item.text, 'Item the second')
-		self.assertEqual(second_saved_item.list,list_)
-	'''
 
 	def test_default_text(self):
 		item=Item()
@@ -65,8 +39,23 @@ class ListModelTest(TestCase):
 		item=Item(list=list2,text='bla')
 		item.full_clean()
 	
+	def test_lists_can_have_owners(self):
+		user=User.objects.create(email='a@b.com')
+		list_=List.objects.create(owner=user)
+		self.assertIn(list_,user.list_set.all())
 
-def ItemModelTest(TestCase):
+
+	def test_list_owner_is_optional(self):
+		List.objects.create()
+
+	def tes_list_name_is_first_item_text(self):
+		list_=List.objects.create()
+		Item.objects.create(list=list_,text='first item')
+		Item.objects.create(list=list_,text='second item')
+		self.assertEqual(list_.name,'first item')
+class ItemModelTest(TestCase):
+
 	def test_get_absolute_url(self):
 		list_=List.objects.create()
 		self.assertEqual(list_.get_absolute_url(),f'/lists/{list_.id}/')
+
