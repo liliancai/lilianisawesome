@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'lilianisawesome.com',
     '127.0.0.1',
+    '128.199.202.74', # In case lilianisawesome given up by me - - !
     ]
 
 
